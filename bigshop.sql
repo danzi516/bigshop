@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2020-05-27 11:53:30
+Date: 2020-06-01 17:42:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3782,7 +3782,7 @@ CREATE TABLE `level` (
   `logo` varchar(255) DEFAULT NULL,
   `sort` int(5) DEFAULT NULL COMMENT '等级',
   `orgId` int(11) DEFAULT NULL,
-  `sale_rate` varchar(4) DEFAULT NULL,
+  `saleRate` varchar(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='会员等级表';
 
@@ -19990,7 +19990,7 @@ CREATE TABLE `organ_level_sale` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `orgId` varchar(255) DEFAULT NULL,
   `levelId` int(11) DEFAULT NULL,
-  `sale_rate` varchar(4) DEFAULT NULL COMMENT '折扣比率',
+  `saleRate` varchar(4) DEFAULT NULL COMMENT '折扣比率',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='机构会员等级折扣表';
 
@@ -20217,15 +20217,18 @@ CREATE TABLE `product_brand_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bid` int(11) DEFAULT NULL,
   `cid` int(11) DEFAULT NULL,
+  `unionId` int(11) DEFAULT NULL,
+  `creatAt` int(255) DEFAULT NULL,
+  `updateAt` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='品牌分类关系';
 
 -- ----------------------------
 -- Records of product_brand_category
 -- ----------------------------
-INSERT INTO `product_brand_category` VALUES ('1', '3', '1150101');
-INSERT INTO `product_brand_category` VALUES ('2', '119', '3070402');
-INSERT INTO `product_brand_category` VALUES ('3', '120', '3070402');
+INSERT INTO `product_brand_category` VALUES ('1', '3', '1150101', null, null, null);
+INSERT INTO `product_brand_category` VALUES ('2', '119', '3070402', null, null, null);
+INSERT INTO `product_brand_category` VALUES ('3', '120', '3070402', null, null, null);
 
 -- ----------------------------
 -- Table structure for product_category
@@ -21241,6 +21244,39 @@ CREATE TABLE `stock_amount` (
 
 -- ----------------------------
 -- Records of stock_amount
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for union
+-- ----------------------------
+DROP TABLE IF EXISTS `union`;
+CREATE TABLE `union` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL COMMENT '名称',
+  `logo` varchar(255) DEFAULT NULL,
+  `creatAt` int(255) DEFAULT NULL,
+  `creatTime` datetime DEFAULT NULL,
+  `ower` int(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='联盟';
+
+-- ----------------------------
+-- Records of union
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for union_organ
+-- ----------------------------
+DROP TABLE IF EXISTS `union_organ`;
+CREATE TABLE `union_organ` (
+  `id` int(11) NOT NULL,
+  `unionId` int(11) DEFAULT NULL,
+  `orgId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of union_organ
 -- ----------------------------
 
 -- ----------------------------
