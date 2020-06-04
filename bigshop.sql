@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2020-06-01 17:42:33
+Date: 2020-06-04 17:30:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20018,49 +20018,68 @@ CREATE TABLE `organ_member` (
 INSERT INTO `organ_member` VALUES ('1', '2', '5', '1.0', '2');
 
 -- ----------------------------
--- Table structure for product_attr
+-- Table structure for product_attr_base
 -- ----------------------------
-DROP TABLE IF EXISTS `product_attr`;
-CREATE TABLE `product_attr` (
+DROP TABLE IF EXISTS `product_attr_base`;
+CREATE TABLE `product_attr_base` (
+  `id` int(11) NOT NULL,
+  `skuId` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品基础属性';
+
+-- ----------------------------
+-- Records of product_attr_base
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for product_attr_sale
+-- ----------------------------
+DROP TABLE IF EXISTS `product_attr_sale`;
+CREATE TABLE `product_attr_sale` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `desc` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
+  `skuId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='销售属性表 product_attr';
 
 -- ----------------------------
--- Records of product_attr
+-- Records of product_attr_sale
 -- ----------------------------
-INSERT INTO `product_attr` VALUES ('1', '保存方式', '产品保存的方式', '1');
-INSERT INTO `product_attr` VALUES ('2', '颜色', null, '1');
-INSERT INTO `product_attr` VALUES ('3', '气味', null, '1');
+INSERT INTO `product_attr_sale` VALUES ('1', '保存方式', '产品保存的方式', '1', null);
+INSERT INTO `product_attr_sale` VALUES ('2', '颜色', null, '1', null);
+INSERT INTO `product_attr_sale` VALUES ('3', '气味', null, '1', null);
 
 -- ----------------------------
--- Table structure for product_attr_value
+-- Table structure for product_attr_sale_value
 -- ----------------------------
-DROP TABLE IF EXISTS `product_attr_value`;
-CREATE TABLE `product_attr_value` (
+DROP TABLE IF EXISTS `product_attr_sale_value`;
+CREATE TABLE `product_attr_sale_value` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `attrId` int(11) DEFAULT NULL,
-  `value` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `desc` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `skuId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='销售属性值 product_attr_value';
 
 -- ----------------------------
--- Records of product_attr_value
+-- Records of product_attr_sale_value
 -- ----------------------------
-INSERT INTO `product_attr_value` VALUES ('1', '1', '冷冻', null, '1');
-INSERT INTO `product_attr_value` VALUES ('2', '1', '常温', null, '1');
-INSERT INTO `product_attr_value` VALUES ('3', '1', '密封', null, '1');
-INSERT INTO `product_attr_value` VALUES ('4', '2', '洋', null, '1');
-INSERT INTO `product_attr_value` VALUES ('5', '2', '乌', null, '1');
-INSERT INTO `product_attr_value` VALUES ('6', '2', '土', null, '1');
-INSERT INTO `product_attr_value` VALUES ('7', '3', '玫瑰', null, '1');
-INSERT INTO `product_attr_value` VALUES ('8', '3', '薰衣草', null, '1');
-INSERT INTO `product_attr_value` VALUES ('9', '3', '茉莉花', null, '1');
+INSERT INTO `product_attr_sale_value` VALUES ('1', '1', '冷冻', null, '1', null, null);
+INSERT INTO `product_attr_sale_value` VALUES ('2', '1', '常温', null, '1', null, null);
+INSERT INTO `product_attr_sale_value` VALUES ('3', '1', '密封', null, '1', null, null);
+INSERT INTO `product_attr_sale_value` VALUES ('4', '2', '洋', null, '1', null, null);
+INSERT INTO `product_attr_sale_value` VALUES ('5', '2', '乌', null, '1', null, null);
+INSERT INTO `product_attr_sale_value` VALUES ('6', '2', '土', null, '1', null, null);
+INSERT INTO `product_attr_sale_value` VALUES ('7', '3', '玫瑰', null, '1', null, null);
+INSERT INTO `product_attr_sale_value` VALUES ('8', '3', '薰衣草', null, '1', null, null);
+INSERT INTO `product_attr_sale_value` VALUES ('9', '3', '茉莉花', null, '1', null, null);
 
 -- ----------------------------
 -- Table structure for product_brand
@@ -21106,28 +21125,31 @@ CREATE TABLE `product_sku_ext` (
   `discountRate` varchar(255) DEFAULT NULL COMMENT '折扣价',
   `discountState` varchar(255) DEFAULT NULL COMMENT '折扣状态',
   `specialFee` varchar(255) DEFAULT NULL COMMENT '特价',
-  `wholesaleFee` varchar(255) DEFAULT NULL COMMENT '批发价',
-  `wholesaleUnit` varchar(255) DEFAULT NULL COMMENT '批发规定的数量',
+  `specialState` varchar(255) DEFAULT NULL COMMENT '特价状态',
+  `wholeSaleFee` varchar(255) DEFAULT NULL COMMENT '批发价',
+  `wholeSaleUnit` varchar(255) DEFAULT NULL COMMENT '批发规定的数量',
+  `wholeSaleState` varchar(255) DEFAULT NULL COMMENT '批发价状态',
   `saleState` varchar(255) DEFAULT NULL COMMENT '销售状态（0:零售，1：批发）默认0',
   `attrIndex` varchar(255) DEFAULT NULL COMMENT '属性数',
   `attrValue` varchar(255) DEFAULT NULL COMMENT '属性值',
   `attrName` varchar(255) DEFAULT NULL COMMENT '属性名',
   `logo` varchar(255) DEFAULT NULL,
+  `attrValueName` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_sku_ext
 -- ----------------------------
-INSERT INTO `product_sku_ext` VALUES ('1', '1', null, '1', null, null, null, null, null, '0', '2', '[{\"id\":1,\"name\":\"冷冻\"},{\"id\":4,\"name\":\"洋\"}]', null, null);
-INSERT INTO `product_sku_ext` VALUES ('2', '1', null, '1', null, null, null, null, null, '0', '2', '[{\"id\":1,\"name\":\"冷冻\"},{\"id\":4,\"name\":\"乌\"}]', null, null);
-INSERT INTO `product_sku_ext` VALUES ('3', '1', null, '1', null, null, null, null, null, '0', '2', '[{\"id\":1,\"name\":\"冷冻\"},{\"id\":4,\"name\":\"土\"}]', '冷冻,土', null);
-INSERT INTO `product_sku_ext` VALUES ('4', '1', null, '1', null, null, null, null, null, '0', '2', '[{\"id\":2,\"name\":\"常温\"},{\"id\":4,\"name\":\"洋\"}]', '常温,洋', null);
-INSERT INTO `product_sku_ext` VALUES ('5', '2', null, '1', null, null, null, null, null, '0', '1', '[{\"id\":7,\"name\":\"玫瑰香型\"}]', '玫瑰香型', null);
-INSERT INTO `product_sku_ext` VALUES ('6', '2', null, '1', null, null, null, null, null, '0', '1', '[{\"id\":8,\"name\":\"薰衣草香型\"}]', '薰衣草香型', null);
-INSERT INTO `product_sku_ext` VALUES ('7', '2', null, '1', null, null, null, null, null, '0', '1', '[{\"id\":9,\"name\":\"茉莉花香型\"}]', '茉莉花香型', null);
-INSERT INTO `product_sku_ext` VALUES ('8', '3', null, '1', null, null, null, null, null, '0', null, null, null, null);
-INSERT INTO `product_sku_ext` VALUES ('9', '4', '90', '1', '85', '1', '60', '70', '5', '0', '1', '[{\"id\":7,\"name\":\"玫瑰香型\"}]', '玫瑰香型', null);
+INSERT INTO `product_sku_ext` VALUES ('1', '1', null, '1', null, null, null, null, null, null, null, '0', '2', '[{\"id\":1,\"name\":\"冷冻\"},{\"id\":4,\"name\":\"洋\"}]', null, null, null);
+INSERT INTO `product_sku_ext` VALUES ('2', '1', null, '1', null, null, null, null, null, null, null, '0', '2', '[{\"id\":1,\"name\":\"冷冻\"},{\"id\":4,\"name\":\"乌\"}]', null, null, null);
+INSERT INTO `product_sku_ext` VALUES ('3', '1', null, '1', null, null, null, null, null, null, null, '0', '2', '[{\"id\":1,\"name\":\"冷冻\"},{\"id\":4,\"name\":\"土\"}]', '冷冻,土', null, null);
+INSERT INTO `product_sku_ext` VALUES ('4', '1', null, '1', null, null, null, null, null, null, null, '0', '2', '[{\"id\":2,\"name\":\"常温\"},{\"id\":4,\"name\":\"洋\"}]', '常温,洋', null, null);
+INSERT INTO `product_sku_ext` VALUES ('5', '2', null, '1', null, null, null, null, null, null, null, '0', '1', '[{\"id\":7,\"name\":\"玫瑰香型\"}]', '玫瑰香型', null, null);
+INSERT INTO `product_sku_ext` VALUES ('6', '2', null, '1', null, null, null, null, null, null, null, '0', '1', '[{\"id\":8,\"name\":\"薰衣草香型\"}]', '薰衣草香型', null, null);
+INSERT INTO `product_sku_ext` VALUES ('7', '2', null, '1', null, null, null, null, null, null, null, '0', '1', '[{\"id\":9,\"name\":\"茉莉花香型\"}]', '茉莉花香型', null, null);
+INSERT INTO `product_sku_ext` VALUES ('8', '3', null, '1', null, null, null, null, null, null, null, '0', null, null, null, null, null);
+INSERT INTO `product_sku_ext` VALUES ('9', '4', '90', '1', '85', '1', '60', null, '70', '5', null, '0', '1', '[{\"id\":7,\"name\":\"玫瑰香型\"}]', '玫瑰香型', null, null);
 
 -- ----------------------------
 -- Table structure for product_sku_stock
@@ -21172,10 +21194,10 @@ CREATE TABLE `product_spu` (
   `state` varchar(255) DEFAULT NULL,
   `brandId` int(11) DEFAULT NULL,
   `categoryId` int(11) DEFAULT NULL,
-  `spec` varchar(255) DEFAULT NULL COMMENT '规格',
+  `spec` varchar(255) DEFAULT NULL COMMENT '规格（在基本属性中设置，此处为空）',
   `saleType` varchar(2) DEFAULT NULL COMMENT '0-计量；1-称重',
-  `sellOID` int(11) DEFAULT NULL,
-  `sellUID` int(11) DEFAULT NULL,
+  `creatOID` int(11) DEFAULT NULL,
+  `creatUID` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
@@ -21363,6 +21385,7 @@ CREATE TABLE `ware_info` (
 -- ----------------------------
 -- Records of ware_info
 -- ----------------------------
+INSERT INTO `ware_info` VALUES ('1', '1', null, null);
 
 -- ----------------------------
 -- Table structure for ware_stock
