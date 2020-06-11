@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50715
-Source Host           : 127.0.0.1:3306
+Source Server Version : 50711
+Source Host           : localhost:3306
 Source Database       : bigshop
 
 Target Server Type    : MYSQL
-Target Server Version : 50715
+Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2020-06-07 21:54:56
+Date: 2020-06-11 17:58:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20057,16 +20057,19 @@ INSERT INTO `product_attr` VALUES ('3', '气味', null, '1');
 -- ----------------------------
 DROP TABLE IF EXISTS `product_attr_base`;
 CREATE TABLE `product_attr_base` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `skuId` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品基础属性';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='商品基础属性';
 
 -- ----------------------------
 -- Records of product_attr_base
 -- ----------------------------
+INSERT INTO `product_attr_base` VALUES ('1', '2', '111', '111');
+INSERT INTO `product_attr_base` VALUES ('2', '2', '222', '222');
+INSERT INTO `product_attr_base` VALUES ('3', '2', '333', '333');
 
 -- ----------------------------
 -- Table structure for product_attr_sale
@@ -20084,9 +20087,9 @@ CREATE TABLE `product_attr_sale` (
 -- ----------------------------
 -- Records of product_attr_sale
 -- ----------------------------
-INSERT INTO `product_attr_sale` VALUES ('1', '保存方式', '产品保存的方式', '1', null);
-INSERT INTO `product_attr_sale` VALUES ('2', '颜色', null, '1', null);
-INSERT INTO `product_attr_sale` VALUES ('3', '气味', null, '1', null);
+INSERT INTO `product_attr_sale` VALUES ('1', '保存方式', '产品保存的方式', '1', '2');
+INSERT INTO `product_attr_sale` VALUES ('2', '颜色', null, '1', '2');
+INSERT INTO `product_attr_sale` VALUES ('3', '气味', null, '1', '2');
 
 -- ----------------------------
 -- Table structure for product_attr_sale_value
@@ -20106,15 +20109,15 @@ CREATE TABLE `product_attr_sale_value` (
 -- ----------------------------
 -- Records of product_attr_sale_value
 -- ----------------------------
-INSERT INTO `product_attr_sale_value` VALUES ('1', '1', '冷冻', null, '1', null, null);
-INSERT INTO `product_attr_sale_value` VALUES ('2', '1', '常温', null, '1', null, null);
-INSERT INTO `product_attr_sale_value` VALUES ('3', '1', '密封', null, '1', null, null);
-INSERT INTO `product_attr_sale_value` VALUES ('4', '2', '洋', null, '1', null, null);
-INSERT INTO `product_attr_sale_value` VALUES ('5', '2', '乌', null, '1', null, null);
-INSERT INTO `product_attr_sale_value` VALUES ('6', '2', '土', null, '1', null, null);
-INSERT INTO `product_attr_sale_value` VALUES ('7', '3', '玫瑰', null, '1', null, null);
-INSERT INTO `product_attr_sale_value` VALUES ('8', '3', '薰衣草', null, '1', null, null);
-INSERT INTO `product_attr_sale_value` VALUES ('9', '3', '茉莉花', null, '1', null, null);
+INSERT INTO `product_attr_sale_value` VALUES ('1', '1', '冷冻', null, '1', '0.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('2', '1', '常温', null, '1', '0.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('3', '1', '密封', null, '1', '0.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('4', '2', '洋', null, '1', '5.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('5', '2', '乌', null, '1', '0.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('6', '2', '土', null, '1', '1.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('7', '3', '玫瑰', null, '1', '0.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('8', '3', '薰衣草', null, '1', '0.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('9', '3', '茉莉花', null, '1', '0.00', '2');
 
 -- ----------------------------
 -- Table structure for product_attr_value
@@ -20156,138 +20159,140 @@ CREATE TABLE `product_brand` (
   `state` varchar(2) DEFAULT NULL COMMENT '状态(0无效，1有效)',
   `desc` varchar(255) DEFAULT NULL COMMENT '描述',
   `logoUrl` varchar(255) DEFAULT NULL COMMENT 'logo',
-  `creatAt` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `creatAt` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `creatBy` int(11) DEFAULT NULL COMMENT '创建人',
   `updateAt` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `updateBy` int(11) DEFAULT NULL COMMENT '更新人',
   `isTrue` varchar(2) DEFAULT NULL COMMENT '是否真实品牌',
+  `orgId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='品牌表';
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 COMMENT='品牌表';
 
 -- ----------------------------
 -- Records of product_brand
 -- ----------------------------
-INSERT INTO `product_brand` VALUES ('1', '立白', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('2', '西兰', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('3', '洽洽', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('4', '果湘', 'G', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('5', '非常搭档', 'F', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('6', '富德园', 'F', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('7', '喜之郎', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('8', '养力多', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('9', '上好佳', 'S', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('10', '冬冬', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('11', '蜻蛉', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('12', '味好美', 'W', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('13', '蒙牛', 'M', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('14', '阿伲', 'A', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('15', '淡定', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('16', '摩尔农庄', 'M', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('17', '脉动', 'M', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('18', '统一', 'T', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('19', '云农', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('20', '华曦', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('21', '可口可乐', 'K', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('22', '康师傅', 'K', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('23', '舒蕾', 'S', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('24', '枪手', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('25', '美涛', 'M', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('26', '佳洁士', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('27', '汰渍', 'T', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('28', '碧浪', 'B', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('29', '飘柔', 'P', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('30', '海飞丝', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('31', '潘婷', 'P', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('32', '玉兰油', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('33', '沙宣', 'S', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('34', '伊卡璐', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('35', '舒肤佳', 'S', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('36', '中华', 'Z', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('37', '奥妙', 'A', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('38', '力士', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('39', '旁氏', 'P', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('40', '清扬', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('41', '云南白药', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('42', '黑人', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('43', '自由点', 'Z', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('44', '金纺', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('45', '高露洁', 'G', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('46', '好丽友', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('47', '德芙', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('48', '伊利', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('49', '强生', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('50', '雀巢', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('51', '和路雪', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('52', '海太', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('53', '宾格瑞', 'B', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('54', '多力', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('55', '国良罗平', 'G', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('56', '滇雪', 'Z', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('57', '红飘飘', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('58', '大宝', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('59', '六神', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('60', '鲁花', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('61', '亿美田', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('62', '彩蝶', 'C', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('63', '洁丽雅', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('64', '美尔思', 'M', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('65', '美加净', 'M', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('66', '卡夫', 'K', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('67', '格力高', 'G', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('68', '皇冠', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('69', '好时', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('70', '郁美净', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('71', '浩将', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('72', '春娟', 'C', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('73', '冷酸灵', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('74', '袋鼠', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('75', '椰树', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('76', '三美优家', 'S', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('77', '顺信', 'S', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('78', '永能', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('79', '启鸿', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('80', '绿派', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('81', '德威', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('82', '宝玲', 'B', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('83', '旭美', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('84', '伊而美', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('85', '澳奇', 'A', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('86', '东方E63好多用', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('87', '雅婷', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('88', '鑫盛', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('89', '广华', 'G', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('90', '丽娜', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('91', '品佳', 'P', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('92', '洁泰', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('93', '旺丰', 'W', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('94', '秀姿', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('95', '南峰', 'N', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('96', '巧大嫂', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('97', '福宝', 'F', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('98', '利兵', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('99', '龙仕翔', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('100', '稻草熊', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('101', '金阳', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('102', '百事可乐', 'B', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('103', '徐福记', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('104', '金龙鱼', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('105', '农夫山泉', 'N', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('106', '加多宝', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('107', '乐虎', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('108', '千和', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('109', '云南山泉', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('110', '娃哈哈', 'W', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('111', '雪碧', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('112', '蓝月亮', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('113', '陈克明', 'C', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('114', '老才臣', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('115', '佳期', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('116', '七度空间', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('117', '心心相印', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('118', '菜家村', 'C', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('119', '古龙', 'G', '0', '1', '1', '1', null, null, '2019-12-24 11:58:26', null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('120', '香奈儿', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1');
-INSERT INTO `product_brand` VALUES ('999', '散称', 'S', '0', '1', '1', '1', null, null, '2019-11-15 15:03:52', null, null, null, '0');
+INSERT INTO `product_brand` VALUES ('1', '立白', 'L', '0', '1', '1', '1', null, '/uploadfile/111.jpg', '2020-06-10 14:26:54', '2', null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('2', '西兰', 'X', '0', '1', '1', '1', null, '/uploadfile/111.jpg', '2020-06-10 14:26:57', '2', null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('3', '洽洽', 'Q', '0', '1', '1', '1', null, '/uploadfile/111.jpg', '2020-06-10 14:26:59', '2', null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('4', '果湘', 'G', '0', '1', '1', '1', null, '/uploadfile/111.jpg', '2020-06-10 14:27:00', '2', null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('5', '非常搭档', 'F', '0', '1', '1', '1', null, '/uploadfile/111.jpg', '2020-06-10 14:27:01', '2', null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('6', '富德园', 'F', '0', '1', '1', '1', null, '/uploadfile/111.jpg', '2020-06-10 14:27:02', '2', null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('7', '喜之郎', 'X', '0', '1', '1', '1', null, '/uploadfile/111.jpg', '2020-06-10 14:27:03', '2', null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('8', '养力多', 'Y', '0', '1', '1', '1', null, '/uploadfile/111.jpg', '2020-06-10 14:27:04', '2', null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('9', '上好佳', 'S', '0', '1', '1', '1', null, '/uploadfile/111.jpg', '2020-06-10 14:27:06', null, null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('10', '冬冬', 'D', '0', '1', '1', '1', null, '/uploadfile/111.jpg', '2020-06-10 14:27:07', '2', null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('11', '蜻蛉', 'Q', '0', '1', '1', '1', null, '/uploadfile/111.jpg', '2020-06-10 14:27:08', '2', null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('12', '味好美', 'W', '0', '1', '1', '1', null, '/uploadfile/111.jpg', '2020-06-10 14:27:12', '2', null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('13', '蒙牛', 'M', '0', '1', '1', '1', null, null, null, '2', null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('14', '阿伲', 'A', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('15', '淡定', 'D', '0', '1', '1', '1', null, null, null, '2', null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('16', '摩尔农庄', 'M', '0', '1', '1', '1', null, null, null, '2', null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('17', '脉动', 'M', '0', '1', '1', '1', null, null, null, null, null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('18', '统一', 'T', '0', '1', '1', '1', null, null, null, null, null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('19', '云农', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('20', '华曦', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('21', '可口可乐', 'K', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('22', '康师傅', 'K', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('23', '舒蕾', 'S', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('24', '枪手', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('25', '美涛', 'M', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('26', '佳洁士', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('27', '汰渍', 'T', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('28', '碧浪', 'B', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('29', '飘柔', 'P', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('30', '海飞丝', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('31', '潘婷', 'P', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('32', '玉兰油', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('33', '沙宣', 'S', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('34', '伊卡璐', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('35', '舒肤佳', 'S', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('36', '中华', 'Z', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('37', '奥妙', 'A', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('38', '力士', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('39', '旁氏', 'P', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('40', '清扬', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('41', '云南白药', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('42', '黑人', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('43', '自由点', 'Z', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('44', '金纺', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('45', '高露洁', 'G', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('46', '好丽友', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('47', '德芙', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('48', '伊利', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('49', '强生', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('50', '雀巢', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('51', '和路雪', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('52', '海太', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('53', '宾格瑞', 'B', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('54', '多力', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('55', '国良罗平', 'G', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('56', '滇雪', 'Z', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('57', '红飘飘', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('58', '大宝', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('59', '六神', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('60', '鲁花', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('61', '亿美田', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('62', '彩蝶', 'C', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('63', '洁丽雅', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('64', '美尔思', 'M', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('65', '美加净', 'M', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('66', '卡夫', 'K', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('67', '格力高', 'G', '0', '1', '1', '1', null, null, null, null, null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('68', '皇冠', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('69', '好时', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('70', '郁美净', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('71', '浩将', 'H', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('72', '春娟', 'C', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('73', '冷酸灵', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('74', '袋鼠', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('75', '椰树', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('76', '三美优家', 'S', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('77', '顺信', 'S', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('78', '永能', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('79', '启鸿', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('80', '绿派', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('81', '德威', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('82', '宝玲', 'B', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('83', '旭美', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('84', '伊而美', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('85', '澳奇', 'A', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('86', '东方E63好多用', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('87', '雅婷', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('88', '鑫盛', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('89', '广华', 'G', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('90', '丽娜', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('91', '品佳', 'P', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('92', '洁泰', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('93', '旺丰', 'W', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('94', '秀姿', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('95', '南峰', 'N', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('96', '巧大嫂', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('97', '福宝', 'F', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('98', '利兵', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('99', '龙仕翔', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('100', '稻草熊', 'D', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('101', '金阳', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('102', '百事可乐', 'B', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('103', '徐福记', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('104', '金龙鱼', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('105', '农夫山泉', 'N', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('106', '加多宝', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('107', '乐虎', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('108', '千和', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('109', '云南山泉', 'Y', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('110', '娃哈哈', 'W', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('111', '雪碧', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('112', '蓝月亮', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('113', '陈克明', 'C', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('114', '老才臣', 'L', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('115', '佳期', 'J', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('116', '七度空间', 'Q', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('117', '心心相印', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('118', '菜家村', 'C', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('119', '古龙', 'G', '0', '1', '1', '1', null, null, '2019-12-24 11:58:26', null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('120', '香奈儿', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
+INSERT INTO `product_brand` VALUES ('999', '散称', 'S', '0', '1', '1', '1', null, null, '2019-11-15 15:03:52', null, null, null, '0', null);
+INSERT INTO `product_brand` VALUES ('1000', '卡多石', 'K', '0', '1', '1', '1', '卡多石卡多石卡多石', '/uploadfile/111.jpg', '2020-06-09 14:41:05', '2', null, null, '1', '2');
 
 -- ----------------------------
 -- Table structure for product_brand_category
@@ -20301,11 +20306,12 @@ CREATE TABLE `product_brand_category` (
   `creatAt` int(255) DEFAULT NULL,
   `updateAt` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='品牌分类关系';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='品牌分类关系';
 
 -- ----------------------------
 -- Records of product_brand_category
 -- ----------------------------
+INSERT INTO `product_brand_category` VALUES ('1', null, '3', '1', null, null);
 
 -- ----------------------------
 -- Table structure for product_category
@@ -20325,12 +20331,16 @@ CREATE TABLE `product_category` (
   `isShow` varchar(2) DEFAULT NULL,
   `sort` varchar(4) DEFAULT NULL COMMENT '排序',
   `logo` varchar(255) DEFAULT NULL COMMENT '分类图标',
+  `orgId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000000002 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_category
 -- ----------------------------
+INSERT INTO `product_category` VALUES ('1', '0', '养护', '2020-06-10 17:40:00', '2', null, null, '1', '1', '0', '1', '1', '/uploadfile/111.jpg', '2');
+INSERT INTO `product_category` VALUES ('2', '1', '前车门抛光', '2020-06-10 17:40:01', '2', null, null, '1', '2', '1', '1', '1', '/uploadfile/111.jpg', '2');
+INSERT INTO `product_category` VALUES ('3', '1', '清香剂', '2020-06-11 14:42:04', '2', null, null, '1', '2', '1', '1', '2', '/uploadfile/111.jpg', '2');
 
 -- ----------------------------
 -- Table structure for product_industry
@@ -21194,9 +21204,9 @@ CREATE TABLE `product_sku` (
 -- Records of product_sku
 -- ----------------------------
 INSERT INTO `product_sku` VALUES ('1', '王氏腊鸭', null, null, null, '只', 'http://i2.tiimg.com/706578/0c14e8d1e972c6d0.jpg', null, '50', '50', '1', '96', '1030202', '1', null, null, '1', null, '1', '测试', '0', '2019-12-26 10:57:54');
-INSERT INTO `product_sku` VALUES ('2', '花仙子车载清香剂1瓶装', ' ', null, null, '瓶', 'http://i2.tiimg.com/706578/0c14e8d1e972c6d0.jpg', null, '50', '50', '1', '119', '3070402', '2', '盒', '5', '2', '中天和', '2', '老王', '0', '2019-12-26 14:12:28');
-INSERT INTO `product_sku` VALUES ('3', '花仙子车载清香剂箱装', '1箱20瓶', null, null, '瓶', 'http://i2.tiimg.com/706578/0c14e8d1e972c6d0.jpg', null, '300', '300', '1', '119', '3070402', '2', '箱', '20', '2', '中天和', '2', '老王', '0', '2019-12-26 11:02:49');
-INSERT INTO `product_sku` VALUES ('4', '花仙子固体清香剂', '1盒5瓶', null, null, '盒', 'http://i2.tiimg.com/706578/0c14e8d1e972c6d0.jpg', null, '100', '100', '1', '119', '3070401', '3', '盒', '5', '2', '中天和', '2', '老王', '0', '2019-12-26 10:56:36');
+INSERT INTO `product_sku` VALUES ('2', '花仙子车载清香剂1瓶装', ' ', null, null, '瓶', 'http://i2.tiimg.com/706578/0c14e8d1e972c6d0.jpg', null, '50', '50', '1', '119', '3', '2', '盒', '5', '2', '中天和', '2', '老王', '0', '2020-06-11 14:47:25');
+INSERT INTO `product_sku` VALUES ('3', '花仙子车载清香剂箱装', '1箱20瓶', null, null, '瓶', 'http://i2.tiimg.com/706578/0c14e8d1e972c6d0.jpg', null, '300', '300', '1', '119', '3', '2', '箱', '20', '2', '中天和', '2', '老王', '0', '2020-06-11 14:47:31');
+INSERT INTO `product_sku` VALUES ('4', '花仙子固体清香剂', '1盒5瓶', null, null, '盒', 'http://i2.tiimg.com/706578/0c14e8d1e972c6d0.jpg', null, '100', '100', '1', '119', '3', '3', '盒', '5', '2', '中天和', '2', '老王', '0', '2020-06-11 14:47:58');
 
 -- ----------------------------
 -- Table structure for product_sku_ext
@@ -21290,8 +21300,8 @@ CREATE TABLE `product_spu` (
 -- Records of product_spu
 -- ----------------------------
 INSERT INTO `product_spu` VALUES ('1', '腊鸭', null, null, null, '只', null, null, '50', '50', '1', '96', '1030202', '1斤', '1', null, null);
-INSERT INTO `product_spu` VALUES ('2', '车载清香剂', null, null, null, '瓶', null, null, '50', '50', '1', '119', '3070402', '10ml', '0', null, null);
-INSERT INTO `product_spu` VALUES ('3', '固体清香剂', null, null, null, '盒', null, null, '100', '100', '1', '119', '3070401', '50克', '0', null, null);
+INSERT INTO `product_spu` VALUES ('2', '车载清香剂', null, null, null, '瓶', null, null, '50', '50', '1', '119', '3070402', '10ml', '0', '2', '2');
+INSERT INTO `product_spu` VALUES ('3', '固体清香剂', null, null, null, '盒', null, null, '100', '100', '1', '119', '3070401', '50克', '0', '2', '2');
 
 -- ----------------------------
 -- Table structure for product_spu_sku_attr_map
@@ -21370,6 +21380,7 @@ CREATE TABLE `union` (
 -- ----------------------------
 -- Records of union
 -- ----------------------------
+INSERT INTO `union` VALUES ('1', 'ddasdasd', null, '2', null, '2');
 
 -- ----------------------------
 -- Table structure for union_organ
@@ -21385,6 +21396,7 @@ CREATE TABLE `union_organ` (
 -- ----------------------------
 -- Records of union_organ
 -- ----------------------------
+INSERT INTO `union_organ` VALUES ('1', '1', '2');
 
 -- ----------------------------
 -- Table structure for user
