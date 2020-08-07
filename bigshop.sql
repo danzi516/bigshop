@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2020-06-11 17:58:03
+Date: 2020-08-07 16:51:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3783,15 +3783,16 @@ CREATE TABLE `level` (
   `sort` int(5) DEFAULT NULL COMMENT '等级',
   `orgId` int(11) DEFAULT NULL,
   `saleRate` varchar(4) DEFAULT NULL,
+  `canDel` varchar(2) DEFAULT NULL COMMENT '是否能删除(0:不能，1:能)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='会员等级表';
 
 -- ----------------------------
 -- Records of level
 -- ----------------------------
-INSERT INTO `level` VALUES ('1', '普通', null, null, '1', '2', '1');
-INSERT INTO `level` VALUES ('2', '银牌', null, null, '2', '2', '0.9');
-INSERT INTO `level` VALUES ('3', '金牌', null, null, '3', '2', '0.5');
+INSERT INTO `level` VALUES ('1', '普通', null, null, '1', '2', '1', null);
+INSERT INTO `level` VALUES ('2', '银牌', null, null, '2', '2', '0.9', null);
+INSERT INTO `level` VALUES ('3', '金牌', null, null, '3', '2', '0.5', null);
 
 -- ----------------------------
 -- Table structure for order_info
@@ -3840,14 +3841,16 @@ CREATE TABLE `organ` (
   `bossPhone` varchar(255) DEFAULT NULL,
   `bossName` varchar(255) DEFAULT NULL,
   `desc` varchar(255) DEFAULT NULL,
+  `weixinQRcode` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of organ
 -- ----------------------------
-INSERT INTO `organ` VALUES ('1', '测试机构', '11122233333', 'boss', null);
-INSERT INTO `organ` VALUES ('2', '中天和', '11111111111', 'boss', null);
+INSERT INTO `organ` VALUES ('1', '测试机构', '11122233333', '王老板', null, null, '武汉市 青山区 长丰镖局');
+INSERT INTO `organ` VALUES ('2', '中天和', '11111111111', '李老板', null, null, '武汉市 洪山区 威风镖局');
 
 -- ----------------------------
 -- Table structure for organ_customer
@@ -19991,29 +19994,12 @@ CREATE TABLE `organ_industry` (
   `orgId` int(11) DEFAULT NULL,
   `industryId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='机构行业';
 
 -- ----------------------------
 -- Records of organ_industry
 -- ----------------------------
 INSERT INTO `organ_industry` VALUES ('1', '2', '601');
-
--- ----------------------------
--- Table structure for organ_level_sale
--- ----------------------------
-DROP TABLE IF EXISTS `organ_level_sale`;
-CREATE TABLE `organ_level_sale` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `orgId` varchar(255) DEFAULT NULL,
-  `levelId` int(11) DEFAULT NULL,
-  `saleRate` varchar(4) DEFAULT NULL COMMENT '折扣比率',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='机构会员等级折扣表';
-
--- ----------------------------
--- Records of organ_level_sale
--- ----------------------------
-INSERT INTO `organ_level_sale` VALUES ('1', '2', '2', '0.9');
 
 -- ----------------------------
 -- Table structure for organ_member
@@ -20032,25 +20018,6 @@ CREATE TABLE `organ_member` (
 -- Records of organ_member
 -- ----------------------------
 INSERT INTO `organ_member` VALUES ('1', '2', '5', '1.0', '2');
-
--- ----------------------------
--- Table structure for product_attr
--- ----------------------------
-DROP TABLE IF EXISTS `product_attr`;
-CREATE TABLE `product_attr` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `desc` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='销售属性表 product_attr';
-
--- ----------------------------
--- Records of product_attr
--- ----------------------------
-INSERT INTO `product_attr` VALUES ('1', '保存方式', '产品保存的方式', '1');
-INSERT INTO `product_attr` VALUES ('2', '颜色', null, '1');
-INSERT INTO `product_attr` VALUES ('3', '气味', null, '1');
 
 -- ----------------------------
 -- Table structure for product_attr_base
@@ -20082,14 +20049,17 @@ CREATE TABLE `product_attr_sale` (
   `status` varchar(255) DEFAULT NULL,
   `skuId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='销售属性表 product_attr';
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='销售属性表 product_attr';
 
 -- ----------------------------
 -- Records of product_attr_sale
 -- ----------------------------
 INSERT INTO `product_attr_sale` VALUES ('1', '保存方式', '产品保存的方式', '1', '2');
-INSERT INTO `product_attr_sale` VALUES ('2', '颜色', null, '1', '2');
 INSERT INTO `product_attr_sale` VALUES ('3', '气味', null, '1', '2');
+INSERT INTO `product_attr_sale` VALUES ('4', '1211124324', null, '1', '3');
+INSERT INTO `product_attr_sale` VALUES ('17', '23weg', null, '1', '3');
+INSERT INTO `product_attr_sale` VALUES ('18', null, null, null, null);
+INSERT INTO `product_attr_sale` VALUES ('19', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for product_attr_sale_value
@@ -20098,52 +20068,25 @@ DROP TABLE IF EXISTS `product_attr_sale_value`;
 CREATE TABLE `product_attr_sale_value` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `attrId` int(11) DEFAULT NULL,
+  `symbol` int(5) DEFAULT NULL COMMENT '下标',
   `name` varchar(255) DEFAULT NULL,
   `desc` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `skuId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='销售属性值 product_attr_value';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='销售属性值 product_attr_value';
 
 -- ----------------------------
 -- Records of product_attr_sale_value
 -- ----------------------------
-INSERT INTO `product_attr_sale_value` VALUES ('1', '1', '冷冻', null, '1', '0.00', '2');
-INSERT INTO `product_attr_sale_value` VALUES ('2', '1', '常温', null, '1', '0.00', '2');
-INSERT INTO `product_attr_sale_value` VALUES ('3', '1', '密封', null, '1', '0.00', '2');
-INSERT INTO `product_attr_sale_value` VALUES ('4', '2', '洋', null, '1', '5.00', '2');
-INSERT INTO `product_attr_sale_value` VALUES ('5', '2', '乌', null, '1', '0.00', '2');
-INSERT INTO `product_attr_sale_value` VALUES ('6', '2', '土', null, '1', '1.00', '2');
-INSERT INTO `product_attr_sale_value` VALUES ('7', '3', '玫瑰', null, '1', '0.00', '2');
-INSERT INTO `product_attr_sale_value` VALUES ('8', '3', '薰衣草', null, '1', '0.00', '2');
-INSERT INTO `product_attr_sale_value` VALUES ('9', '3', '茉莉花', null, '1', '0.00', '2');
-
--- ----------------------------
--- Table structure for product_attr_value
--- ----------------------------
-DROP TABLE IF EXISTS `product_attr_value`;
-CREATE TABLE `product_attr_value` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `attrId` int(11) DEFAULT NULL,
-  `value` varchar(255) DEFAULT NULL,
-  `desc` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='销售属性值 product_attr_value';
-
--- ----------------------------
--- Records of product_attr_value
--- ----------------------------
-INSERT INTO `product_attr_value` VALUES ('1', '1', '冷冻', null, '1');
-INSERT INTO `product_attr_value` VALUES ('2', '1', '常温', null, '1');
-INSERT INTO `product_attr_value` VALUES ('3', '1', '密封', null, '1');
-INSERT INTO `product_attr_value` VALUES ('4', '2', '洋', null, '1');
-INSERT INTO `product_attr_value` VALUES ('5', '2', '乌', null, '1');
-INSERT INTO `product_attr_value` VALUES ('6', '2', '土', null, '1');
-INSERT INTO `product_attr_value` VALUES ('7', '3', '玫瑰', null, '1');
-INSERT INTO `product_attr_value` VALUES ('8', '3', '薰衣草', null, '1');
-INSERT INTO `product_attr_value` VALUES ('9', '3', '茉莉花', null, '1');
+INSERT INTO `product_attr_sale_value` VALUES ('1', '1', null, '冷冻', null, '1', '0.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('2', '1', null, '常温', null, '1', '0.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('3', '1', null, '密封', null, '1', '0.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('7', '3', null, '玫瑰', null, '1', '0.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('8', '3', null, '薰衣草', null, '1', '0.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('9', '3', null, '茉莉花', null, '1', '0.00', '2');
+INSERT INTO `product_attr_sale_value` VALUES ('11', '17', null, '1', null, '1', null, '3');
 
 -- ----------------------------
 -- Table structure for product_brand
@@ -20166,7 +20109,7 @@ CREATE TABLE `product_brand` (
   `isTrue` varchar(2) DEFAULT NULL COMMENT '是否真实品牌',
   `orgId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 COMMENT='品牌表';
+) ENGINE=InnoDB AUTO_INCREMENT=1002 DEFAULT CHARSET=utf8 COMMENT='品牌表';
 
 -- ----------------------------
 -- Records of product_brand
@@ -20293,6 +20236,7 @@ INSERT INTO `product_brand` VALUES ('119', '古龙', 'G', '0', '1', '1', '1', nu
 INSERT INTO `product_brand` VALUES ('120', '香奈儿', 'X', '0', '1', '1', '1', null, null, null, null, null, null, '1', null);
 INSERT INTO `product_brand` VALUES ('999', '散称', 'S', '0', '1', '1', '1', null, null, '2019-11-15 15:03:52', null, null, null, '0', null);
 INSERT INTO `product_brand` VALUES ('1000', '卡多石', 'K', '0', '1', '1', '1', '卡多石卡多石卡多石', '/uploadfile/111.jpg', '2020-06-09 14:41:05', '2', null, null, '1', '2');
+INSERT INTO `product_brand` VALUES ('1001', '1313', null, null, null, null, null, null, '/uploadfile/1596162928491定损员.png', null, null, null, null, null, '2');
 
 -- ----------------------------
 -- Table structure for product_brand_category
@@ -21196,7 +21140,7 @@ CREATE TABLE `product_sku` (
   `sellUID` int(11) DEFAULT NULL,
   `sellName` varchar(255) DEFAULT NULL,
   `saleType` varchar(2) DEFAULT NULL COMMENT '0-计量；1-称重',
-  `version` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updateTime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
@@ -21229,22 +21173,30 @@ CREATE TABLE `product_sku_ext` (
   `attrValue` varchar(255) DEFAULT NULL COMMENT '属性值',
   `attrName` varchar(255) DEFAULT NULL COMMENT '属性名',
   `logo` varchar(255) DEFAULT NULL,
-  `attrValueName` varchar(255) DEFAULT NULL,
+  `stock` varchar(255) DEFAULT NULL,
+  `childProductNo` varchar(255) DEFAULT NULL,
+  `attrList` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_sku_ext
 -- ----------------------------
-INSERT INTO `product_sku_ext` VALUES ('1', '1', null, '1', null, null, null, null, null, null, null, '0', '2', '[{\"id\":1,\"name\":\"冷冻\"},{\"id\":4,\"name\":\"洋\"}]', null, null, null);
-INSERT INTO `product_sku_ext` VALUES ('2', '1', null, '1', null, null, null, null, null, null, null, '0', '2', '[{\"id\":1,\"name\":\"冷冻\"},{\"id\":4,\"name\":\"乌\"}]', null, null, null);
-INSERT INTO `product_sku_ext` VALUES ('3', '1', null, '1', null, null, null, null, null, null, null, '0', '2', '[{\"id\":1,\"name\":\"冷冻\"},{\"id\":4,\"name\":\"土\"}]', '冷冻,土', null, null);
-INSERT INTO `product_sku_ext` VALUES ('4', '1', null, '1', null, null, null, null, null, null, null, '0', '2', '[{\"id\":2,\"name\":\"常温\"},{\"id\":4,\"name\":\"洋\"}]', '常温,洋', null, null);
-INSERT INTO `product_sku_ext` VALUES ('5', '2', null, '1', null, null, null, null, null, null, null, '0', '1', '[{\"id\":7,\"name\":\"玫瑰香型\"}]', '玫瑰香型', null, null);
-INSERT INTO `product_sku_ext` VALUES ('6', '2', null, '1', null, null, null, null, null, null, null, '0', '1', '[{\"id\":8,\"name\":\"薰衣草香型\"}]', '薰衣草香型', null, null);
-INSERT INTO `product_sku_ext` VALUES ('7', '2', null, '1', null, null, null, null, null, null, null, '0', '1', '[{\"id\":9,\"name\":\"茉莉花香型\"}]', '茉莉花香型', null, null);
-INSERT INTO `product_sku_ext` VALUES ('8', '3', null, '1', null, null, null, null, null, null, null, '0', null, null, null, null, null);
-INSERT INTO `product_sku_ext` VALUES ('9', '4', '90', '1', '85', '1', '60', null, '70', '5', null, '0', '1', '[{\"id\":7,\"name\":\"玫瑰香型\"}]', '玫瑰香型', null, null);
+INSERT INTO `product_sku_ext` VALUES ('1', '1', null, '1', null, null, null, null, null, null, null, '0', '2', '[{\"id\":1,\"name\":\"冷冻\"},{\"id\":4,\"name\":\"洋\"}]', null, null, null, null, null);
+INSERT INTO `product_sku_ext` VALUES ('2', '1', null, '1', null, null, null, null, null, null, null, '0', '2', '[{\"id\":1,\"name\":\"冷冻\"},{\"id\":4,\"name\":\"乌\"}]', null, null, null, null, null);
+INSERT INTO `product_sku_ext` VALUES ('3', '1', null, '1', null, null, null, null, null, null, null, '0', '2', '[{\"id\":1,\"name\":\"冷冻\"},{\"id\":4,\"name\":\"土\"}]', '冷冻,土', null, null, null, null);
+INSERT INTO `product_sku_ext` VALUES ('4', '1', null, '1', null, null, null, null, null, null, null, '0', '2', '[{\"id\":2,\"name\":\"常温\"},{\"id\":4,\"name\":\"洋\"}]', '常温,洋', null, null, null, null);
+INSERT INTO `product_sku_ext` VALUES ('9', '4', '90', '1', '85', '1', '60', null, '70', '5', null, '0', '1', '[{\"id\":7,\"name\":\"玫瑰香型\"}]', '玫瑰香型', null, '', '', 'null');
+INSERT INTO `product_sku_ext` VALUES ('91', '3', '0', '1', null, null, null, null, null, null, null, null, '_0', null, null, null, '0', '', '[{\"value\":\"1\",\"index\":0,\"name\":\"23weg\"}]');
+INSERT INTO `product_sku_ext` VALUES ('92', '2', '0', '1', null, null, null, null, null, null, null, null, '_0_0', null, null, null, '0', '', '[{\"value\":\"冷冻\",\"index\":0,\"name\":\"保存方式\"},{\"value\":\"玫瑰\",\"index\":0,\"name\":\"气味\"}]');
+INSERT INTO `product_sku_ext` VALUES ('93', '2', '0', '1', null, null, null, null, null, null, null, null, '_0_1', null, null, null, '0', '', '[{\"value\":\"冷冻\",\"index\":0,\"name\":\"保存方式\"},{\"value\":\"薰衣草\",\"index\":1,\"name\":\"气味\"}]');
+INSERT INTO `product_sku_ext` VALUES ('94', '2', '0', '1', null, null, null, null, null, null, null, null, '_0_2', null, null, null, '0', '', '[{\"value\":\"冷冻\",\"index\":0,\"name\":\"保存方式\"},{\"value\":\"茉莉花\",\"index\":2,\"name\":\"气味\"}]');
+INSERT INTO `product_sku_ext` VALUES ('95', '2', '0', '1', null, null, null, null, null, null, null, null, '_1_0', null, null, null, '0', '', '[{\"value\":\"常温\",\"index\":1,\"name\":\"保存方式\"},{\"value\":\"玫瑰\",\"index\":0,\"name\":\"气味\"}]');
+INSERT INTO `product_sku_ext` VALUES ('96', '2', '0', '1', null, null, null, null, null, null, null, null, '_1_1', null, null, null, '0', '', '[{\"value\":\"常温\",\"index\":1,\"name\":\"保存方式\"},{\"value\":\"薰衣草\",\"index\":1,\"name\":\"气味\"}]');
+INSERT INTO `product_sku_ext` VALUES ('97', '2', '0', '1', null, null, null, null, null, null, null, null, '_1_2', null, null, null, '0', '', '[{\"value\":\"常温\",\"index\":1,\"name\":\"保存方式\"},{\"value\":\"茉莉花\",\"index\":2,\"name\":\"气味\"}]');
+INSERT INTO `product_sku_ext` VALUES ('98', '2', '0', '1', null, null, null, null, null, null, null, null, '_2_0', null, null, null, '0', '', '[{\"value\":\"密封\",\"index\":2,\"name\":\"保存方式\"},{\"value\":\"玫瑰\",\"index\":0,\"name\":\"气味\"}]');
+INSERT INTO `product_sku_ext` VALUES ('99', '2', '0', '1', null, null, null, null, null, null, null, null, '_2_1', null, null, null, '0', '', '[{\"value\":\"密封\",\"index\":2,\"name\":\"保存方式\"},{\"value\":\"薰衣草\",\"index\":1,\"name\":\"气味\"}]');
+INSERT INTO `product_sku_ext` VALUES ('100', '2', '0', '1', null, null, null, null, null, null, null, null, '_2_2', null, null, null, '0', '', '[{\"value\":\"密封\",\"index\":2,\"name\":\"保存方式\"},{\"value\":\"茉莉花\",\"index\":2,\"name\":\"气味\"}]');
 
 -- ----------------------------
 -- Table structure for product_sku_stock
@@ -21364,6 +21316,26 @@ CREATE TABLE `stock_amount` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for test
+-- ----------------------------
+DROP TABLE IF EXISTS `test`;
+CREATE TABLE `test` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `attrName` varchar(50) DEFAULT NULL,
+  `attrValue` varchar(255) DEFAULT NULL,
+  `symbol` int(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of test
+-- ----------------------------
+INSERT INTO `test` VALUES ('1', '颜色', '红', '0');
+INSERT INTO `test` VALUES ('2', '颜色', '红2', '1');
+INSERT INTO `test` VALUES ('3', '尺寸', 'X', '0');
+INSERT INTO `test` VALUES ('4', '尺寸', 'XL', '1');
+
+-- ----------------------------
 -- Table structure for union
 -- ----------------------------
 DROP TABLE IF EXISTS `union`;
@@ -21371,16 +21343,17 @@ CREATE TABLE `union` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
   `logo` varchar(255) DEFAULT NULL,
-  `creatAt` int(255) DEFAULT NULL,
-  `creatTime` datetime DEFAULT NULL,
+  `creatBy` int(255) DEFAULT NULL,
+  `creatTime` timestamp NULL DEFAULT NULL,
   `ower` int(255) DEFAULT NULL,
+  `banner` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='联盟';
 
 -- ----------------------------
 -- Records of union
 -- ----------------------------
-INSERT INTO `union` VALUES ('1', 'ddasdasd', null, '2', null, '2');
+INSERT INTO `union` VALUES ('1', '哇哈哈', '4', '2', '2020-07-22 10:22:35', '1', null);
 
 -- ----------------------------
 -- Table structure for union_organ
@@ -21390,13 +21363,15 @@ CREATE TABLE `union_organ` (
   `id` int(11) NOT NULL,
   `unionId` int(11) DEFAULT NULL,
   `orgId` int(11) DEFAULT NULL,
+  `creatAt` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of union_organ
 -- ----------------------------
-INSERT INTO `union_organ` VALUES ('1', '1', '2');
+INSERT INTO `union_organ` VALUES ('2', '1', '2', '2020-08-06 15:39:09');
+INSERT INTO `union_organ` VALUES ('3', '1', '1', '2020-08-03 15:39:11');
 
 -- ----------------------------
 -- Table structure for user
